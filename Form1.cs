@@ -84,6 +84,7 @@ namespace Ado.NETProject
             // ExecuteNonQuery metodu, etkilenen satır sayısını döner, ancak burada geri dönen değer kullanılmaz.
             sqlConnection.Close();
             MessageBox.Show("Şehir Başarılı Bir Şekilde Eklendi");
+
         }
     }
 }
