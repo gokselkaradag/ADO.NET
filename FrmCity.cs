@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace Ado.NETProject
 {
-    public partial class Form1 : Form
+    public partial class FrmCity : Form
     {
-        public Form1()
+        public FrmCity()
         {
             InitializeComponent();
         }
@@ -85,6 +85,40 @@ namespace Ado.NETProject
             sqlConnection.Close();
             MessageBox.Show("Şehir Başarılı Bir Şekilde Eklendi");
 
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            sqlConnection.Open();
+            SqlCommand command = new SqlCommand("Delete From TblCity Where CityId=@cityıd", sqlConnection);
+            command.Parameters.AddWithValue("@cityıd", txtCityId.Text);
+            command.ExecuteNonQuery();
+            sqlConnection.Close();
+            MessageBox.Show("Şehir Başarılı Bir Şekilde Silindi", "Uyarı!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            sqlConnection.Open();
+            SqlCommand command = new SqlCommand("Update TblCity Set CityName=@cityname,CityCountry=@citycountry where CityId=@cityıd", sqlConnection);
+            command.Parameters.AddWithValue("@cityıd", txtCityId.Text);
+            command.Parameters.AddWithValue("@cityname", txtCityName.Text);
+            command.Parameters.AddWithValue("@citycountry", txtCityCountry.Text);
+            command.ExecuteNonQuery();
+            sqlConnection.Close();
+            MessageBox.Show("Şehir Başarılı Bir Şekilde Güncellendi", "Uyarı!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            sqlConnection.Open();
+            SqlCommand command = new SqlCommand("Select * From TblCity Where CityName=@cityname", sqlConnection);
+            command.Parameters.AddWithValue("@cityname", txtCityName.Text);
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            DataTable dataTable = new DataTable();
+            adapter.Fill(dataTable);
+            dataGridView1.DataSource = dataTable;
+            sqlConnection.Close();
         }
     }
 }
